@@ -22,3 +22,16 @@ class Heap<T> {
         }
         return root;
     }
+
+    private bubbleUp() {
+        let index = this.data.length - 1;
+        while (index > 0) {
+            let parentIndex = Math.floor((index - 1) / 2);
+            if (this.compare(this.data[index], this.data[parentIndex])) {
+                [this.data[index], this.data[parentIndex]] = [this.data[parentIndex], this.data[index]];
+                index = parentIndex;
+            } else {
+                break;
+            }
+        }
+    }
