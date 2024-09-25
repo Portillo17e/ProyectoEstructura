@@ -137,3 +137,23 @@ class StockMarketSimulator {
             }
         }
     }
+
+    getTransactionHistory() {
+        return this.transactionHistory;
+    }
+}
+
+// Ejemplo de uso
+const simulator = new StockMarketSimulator();
+
+// Colocar órdenes de compra
+simulator.placeBuyOrder('CompanyA', 100, 50);  // 100 acciones, $50 cada una
+simulator.placeBuyOrder('CompanyB', 150, 60);
+
+// Colocar órdenes de venta
+simulator.placeSellOrder('CompanyA', 50, 45);  // 50 acciones, $45 cada una
+simulator.placeSellOrder('CompanyB', 150, 55);
+
+// Obtener el historial de transacciones
+const history = simulator.getTransactionHistory();
+console.log(history);
