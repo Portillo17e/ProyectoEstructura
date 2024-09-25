@@ -35,3 +35,38 @@ class Heap<T> {
             }
         }
     }
+
+    private bubbleDown() {
+        let index = 0;
+        const length = this.data.length;
+        while (true) {
+            let left = 2 * index + 1;
+            let right = 2 * index + 2;
+            let swap = index;
+
+            if (left < length && this.compare(this.data[left], this.data[swap])) {
+                swap = left;
+            }
+            if (right < length && this.compare(this.data[right], this.data[swap])) {
+                swap = right;
+            }
+            if (swap === index) break;
+
+            [this.data[index], this.data[swap]] = [this.data[swap], this.data[index]];
+            index = swap;
+        }
+    }
+
+    peek(): T | undefined {
+        return this.data[0];
+    }
+
+    size(): number {
+        return this.data.length;
+    }
+}
+
+enum OrderType {
+    Buy = "Buy",
+    Sell = "Sell"
+}
