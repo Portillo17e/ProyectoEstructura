@@ -106,3 +106,34 @@ class StockMarketSimulator {
         this.sellOrders.insert(order);
         this.matchOrders();
     }
+
+    private matchOrders() {
+        while (this.buyOrders.size() > 0 && this.sellOrders.size() > 0) {
+            const buyOrder = this.buyOrders.peek();
+            const sellOrder = this.sellOrders.peek();
+
+            if (buyOrder && sellOrder && buyOrder.price >= sellOrder.price) {
+                const quantityMatched = Math.min(buyOrder.quantity, sellOrder.quantity);
+                const priceMatched = sellOrder.price; // Precio de la orden de venta
+
+                this.transactionHistory.push({
+                    company: buyOrder.company,
+                    quantity: quantityMatched,
+                    price: priceMatched,
+                    buyer: buyOrder,
+                    seller: sellOrder
+                });
+
+                console.log(`Transacción ejecutada: ${quantityMatched} acciones de ${buyOrder.company} a $${priceMatched}`);
+
+                // Actualizamos cantidades o eliminamos órdenes si se completaron
+                buyOrder.quantity -= quantityMatched;
+                sellOrder.quantity -= quantityMatched;
+
+                if (buyOrder.quantity === 0) this.buyOrders.extract();
+                if (sellOrder.quantity === 0) this.sellOrders.extract();
+            } else {
+                break;
+            }
+        }
+    }
